@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせフォーム</title>
+    <link rel="stylesheet" href="styles.css"> <!-- 外部CSSファイルのリンク -->
+</head>
+<body>
+    <main>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="company">
+                    <span class="required">必須</span> 
+                    <span class="label-text">会社名</span>
+                </label>
+                <input type="text" id="company" name="company" maxlength="20" placeholder="例）株式会社○○" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">
+                    <span class="required">必須</span> 
+                    <span class="label-text">氏名</span>
+                </label>
+                <input type="text" id="name" name="name" maxlength="20" placeholder="例）山田太郎" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">
+                    <span class="required">必須</span> 
+                    <span class="label-text">電話番号</span>
+                </label>
+                <input type="text" id="phone" name="phone" pattern="\d{3}-\d{4}-\d{4}" placeholder="例）000-0000-0000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    <span class="required">必須</span> 
+                    <span class="label-text">メールアドレス</span>
+                </label>
+                <input type="email" id="email" name="email" placeholder="例）example@gmail.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">
+                    <span class="required">必須</span> 
+                    <span class="label-text">生年月日</span>
+                </label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">
+                    <span class="required">必須</span> 
+                    <span class="label-text">性別</span>
+                </label>
+                <input type="radio" id="male" name="gender" value="male" required>男
+                <input type="radio" id="female" name="gender" value="female" required>女
+            </div>
+
+            <div class="form-group">
+                <label for="occupation">
+                    <span class="required">必須</span> 
+                    <span class="label-text">職業</span>
+                </label>
+                <select id="occupation" name="occupation" required>
+                    <option value="">選択してください</option>
+                    <option value="it">IT関連</option>
+                    <option value="finance">金融関連</option>
+                    <option value="education">教育関連</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="inquiry">
+                    <span class="required">必須</span> 
+                    <span class="label-text">お問い合わせ内容</span>
+                </label>
+                <textarea id="inquiry" name="inquiry" rows="4" required></textarea>
+            </div>
+
+            <button type="submit">確認する</button> <!-- ボタンの配置 -->
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // フォームのデフォルトの送信を防ぐ
+            var phonePattern = /\d{3}-\d{4}-\d{4}/;
+            var phone = document.getElementById('phone').value;
+            if (!phonePattern.test(phone)) {
+                alert('電話番号の形式が正しくありません。例）000-0000-0000');
+            } else {
+                var form = document.getElementById('contactForm');
+                var formData = new FormData(form);
+                var params = new URLSearchParams();
+                formData.forEach((value, key) => {
+                    params.append(key, value);
+                });
+                window.location.href = 'confirm.html?' + params.toString(); // 確認ページにリダイレクト
+            }
+        });
+    </script>
+</body>
+</html>
